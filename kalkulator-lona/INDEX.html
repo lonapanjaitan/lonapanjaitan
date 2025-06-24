@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kalkulator Konversi & Aritmatika Bilangan</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.07);
+      padding: 30px;
+      border-radius: 12px;
+      width: 400px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      color: #00ffe7;
+    }
+
+    label, select, input, button {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      font-size: 15px;
+    }
+
+    input, select {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+    }
+
+    button {
+      background-color: #00ffe7;
+      color: #000;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      margin-top: 15px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #00cccc;
+    }
+
+    #hasil {
+      margin-top: 20px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Kalkulator Konversi & Aritmatika</h2>
+
+    <label for="input1">Bilangan Pertama:</label>
+    <input type="text" id="input1" placeholder="Misal: 1010">
+
+    <label for="input2">Bilangan Kedua:</label>
+    <input type="text" id="input2" placeholder="Misal: 1100">
+
+    <label for="basis">Pilih Basis Input:</label>
+    <select id="basis">
+      <option value="2">Biner</option>
+      <option value="8">Oktal</option>
+      <option value="10">Desimal</option>
+      <option value="16">Heksadesimal</option>
+    </select>
+
+    <label for="operasi">Operasi:</label>
+    <select id="operasi">
+      <option value="add">Penjumlahan</option>
+      <option value="subtract">Pengurangan</option>
+      <option value="multiply">Perkalian</option>
+      <option value="divide">Pembagian</option>
+    </select>
+
+    <button onclick="hitung()">Hitung & Konversi</button>
+
+    <div id="hasil"></div>
+  </div>
+
+  <script>
+    function hitung() {
+      let bil1 = document.getElementById("input1").value.trim();
+      let bil2 = document.getElementById("input2").value.trim();
+      let basis = parseInt(document.getElementById("basis").value);
+      let operasi = document.getElementById("operasi").value;
+
+      let n1 = parseInt(bil1, basis);
+      let n2 = parseInt(bil2, basis);
+      let hasilAritmatika;
+
+      if (isNaN(n1) || isNaN(n2)) {
+        document.getElementById("hasil").innerText = "Input tidak valid.";
+        return;
+      }
+
+      switch (operasi) {
+        case "add":
+          hasilAritmatika = n1 + n2;
+          break;
+        case "subtract":
+          hasilAritmatika = n1 - n2;
+          break;
+        case "multiply":
+          hasilAritmatika = n1 * n2;
+          break;
+        case "divide":
+          if (n2 === 0) {
+            document.getElementById("hasil").innerText = "Error: Pembagian dengan nol.";
+            return;
+          }
+          hasilAritmatika = Math.floor(n1 / n2);
+          break;
+        default:
+          hasilAritmatika = 0;
+      }
+
+      let output = `
+        <strong>Hasil Aritmatika (Desimal):</strong> ${hasilAritmatika}<br>
+        <strong>Biner:</strong> ${hasilAritmatika.toString(2)}<br>
+        <strong>Oktal:</strong> ${hasilAritmatika.toString(8)}<br>
+        <strong>Heksadesimal:</strong> ${hasilAritmatika.toString(16).toUpperCase()}
+      `;
+
+      document.getElementById("hasil").innerHTML = output;
+    }
+  </script>
+</body>
+</html>
